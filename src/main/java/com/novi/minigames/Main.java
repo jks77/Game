@@ -5,30 +5,23 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        //Get name of player 1
+        // vraag om namen spelers
         Scanner input = new Scanner(System.in);
-        
-       // boolean debug = false;
-        
-       /*Player John = new Player("frits", '0');
-       John.name = "John";
-       
-       Player player2 = new Player("John", 'x');
-       Player.getName();
-       
-       TicTacToe Jan = new TicTacToe();*/
-       
         System.out.println("Speler1, wat is je naam?");
         String speler1 = /*debug ? "Dennis" :*/ input.nextLine();
         
-        //Get name of player 2 
+        Player player1 = new Player(speler1, 'X');
+                
         System.out.println("Speler2, wat is je naam");
         String speler2 = input.nextLine();
-          
+        
+        Player player2 = new Player(speler2, '0');
+        
         //int scoreplayerone = 0;
         //int scoreplayertwo = 0;
         //Print Menu
         
+        // verzoek spelers om een spel te kiezen
         System.out.println("Welk spel wil je spelen?");
         System.out.println("1: Boter Kaas en Eieren");
         System.out.println("2: Vier op een rij");
@@ -36,23 +29,25 @@ public class Main {
         
         //Scanner game = new Scanner(System.in); (niet gebruikt)
         //Get chosen game
+        
+        // keuze spel
         int spel = input.nextInt();
         
+        // breedte spel tictactoe
         int breedte = 3;
         int aantalVelden = breedte * breedte;
         
-        //boolean spelBezig = true;
         //Start chosen game
         if(spel == 1) {
             //start Tic Tac Toe
-            char[] velden = new char[9];
+            char[] velden = new char[aantalVelden];
             
-            // dit maakt array fields[] = [1,2,3,4,5,6,7,8,9];
+            // dit maakt array velden[aantalVelden] , bij tictactoe velden[1,2,3,4,5,6,7,8,9];
             for(int i = 0; i < aantalVelden; i++) {
                 velden[i] = (char)('1' + i);
             }
             
-            // dit maakt de grid in kolommen en rijen
+            // dit maakt het veld in kolommen en rijen
             for(int rij = 0; rij < breedte; rij++) {
                 for(int kolom = 0; kolom < breedte; kolom++) {
                     System.out.print(velden[kolom + rij * breedte]);
@@ -61,38 +56,43 @@ public class Main {
                 System.out.println("");
             }
             
-        String huidigeSpeler = speler1;
-        char cross = 'X';
-        char round = '0';
-
+        String huidigeSpeler = player1.getNaam();
+        //char kruis = 'X';
+        //char rondje = '0';
+        
+        boolean spelSpeelt = true;
+        
+        while(spelSpeelt) {
         for(int i = 0; i < aantalVelden; i++) {
-            if(huidigeSpeler == speler1) {
+            if(huidigeSpeler == player1.getNaam()) {
             // player1 is aan de beurt en mag veld noemen
             System.out.println("Huidige speler is: " + huidigeSpeler);
             System.out.println("Kies een veld: ");
             
-            // genoemd nummer wordt in fields array gewijzigd naar 'X'
+            // genoemd nummer wordt in velden array gewijzigd naar 'X'
             int antwoordHuidigeSpeler= input.nextInt();
-            velden[antwoordHuidigeSpeler - 1] = cross;
+            velden[antwoordHuidigeSpeler - 1] = player1.getSymbool();
             
             // grid wordt opgebouwd maar nu met gewijzigde 'X'
             for(int rij = 0; rij < breedte; rij++) {
                 for(int kolom = 0; kolom < breedte; kolom++) {
                     System.out.print(velden[kolom + rij * breedte]);
                     System.out.print(" ");
-                }
-                System.out.println("");
-                huidigeSpeler = speler2;
-            } 
+                }            
+            System.out.println("");
+            huidigeSpeler = player2.getNaam();
             }
+            }
+                        
             else {
+            
             // player1 is aan de beurt en mag veld noemen
             System.out.println("Huidige speler is: " + huidigeSpeler);
             System.out.println("Kies een veld: ");
             
             // genoemd nummer wordt in fields array gewijzigd naar '0'
             int antwoordHuidigeSpeler = input.nextInt();
-            velden[antwoordHuidigeSpeler - 1] = round;
+            velden[antwoordHuidigeSpeler - 1] = player2.getSymbool();
             
             // grid wordt opgebouwd maar nu met gewijzigde '0'
             for(int rij = 0; rij < breedte; rij++) {
@@ -101,13 +101,22 @@ public class Main {
                     System.out.print(" ");
                 }
                 System.out.println("");
-                huidigeSpeler = speler1;
+                } 
+                huidigeSpeler = player1.getNaam(); 
             }
+            if(velden[0] == player1.getSymbool() && velden[1] == player1.getSymbool() && velden[2] == player1.getSymbool() || velden[3] == player1.getSymbool()
+                    && velden[4] == player1.getSymbool() && velden[5] == player1.getSymbool() || velden[6] == player1.getSymbool() && velden[7] == player1.getSymbool()
+                    && velden[8] == player1.getSymbool()) {
+                System.out.println("gefeliciteerd");
+                spelSpeelt = false;
+                System.out.println(spelSpeelt);
             }
-        }
+          }
+         }
+       }
     }
 }
-}
+
     /*if(gridTic[i] == 3) {
                       System.out.println();
                     }
